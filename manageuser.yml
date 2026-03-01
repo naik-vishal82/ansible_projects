@@ -1,0 +1,34 @@
+---
+ - name: Manage User and Group
+   hosts: all
+   tasks:
+     - name: Create User
+       user:
+         name: usr1
+         state: present
+
+     - name: Create Group
+       group:
+         name: pune
+         state: present
+
+     - name: Create working directory
+       file:
+         name: /work_dir
+         state: directory
+         owner: usr1
+         group: pune
+         mode: '750'
+
+     - name: Create file
+       file:
+         path: /work_dir/file1.txt
+         state: touch
+         owner: usr1
+         group: pune
+         mode: '644'
+
+     - name: Edit file
+       lineinfile:
+         path: /work_dir/file1.txt
+         line: 'Hello User. Welcome to the pune group'

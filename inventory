@@ -1,0 +1,6 @@
+[web]
+node1
+node2
+node3
+[web:vars]
+ansible_port

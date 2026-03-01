@@ -1,0 +1,31 @@
+---
+ - name: Webhosting from Docker and Git hub
+   hosts: web[1]
+   tasks:
+     - name: Install Docker and Git
+       dnf:
+         name:
+           - docker
+           - git
+         state: present
+
+     - name: Docker start and enable
+       service:
+         name: docker
+         state: started
+         enabled: yes
+
+     - name: User add in docker group
+       user:
+         name: itadmin
+         group: docker
+         append: yes
+
+     - name: Host site on container from DockerHub
+       shell: docker run -dt --name=c1 -t -p 81:80 vishumana/dockerproject:beach
+
+     - name: Git clone form GItHub
+       command: git clone https://github.com/naik-vishal82/denimjeans.git
+
+     - name: Combine both docker and git and host another site
+       shell: docker run -dt --name=c2 -v /home/itadmin/denimjeans/:/usr/share/nginx/html/ --privileged=true -t -p 82:80 nginx

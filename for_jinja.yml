@@ -1,0 +1,8 @@
+---
+ - name: For Jinja Template
+   hosts: all
+   tasks:
+     - name: Transfer jija template to another text file for output
+       template:
+         src: jinja_template.j2
+         dest: /dir1/file.txt
